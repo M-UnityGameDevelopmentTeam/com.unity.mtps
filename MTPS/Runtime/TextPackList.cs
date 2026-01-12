@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MUnity.MTPS
+namespace MTPS
 {
     public class TextPackList : MonoBehaviour
     {

@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 88186754}
   - component: {fileID: 88186755}
+  - component: {fileID: 88186756}
   m_Layer: 0
   m_Name: TextPack
   m_TagString: Untagged
@@ -163,7 +164,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a736e76f21dabd1a80f519a931aef64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextPackDirector
+  DestroyOnLoad: 0
   TextPacks: []
+--- !u!114 &88186756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88186753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ee315b271bf3d659d8c0e326a382f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MUnity.MTPS::MUnity.MTPS.MTPSHelper
+  Scenes: []
+  DelayInSeconds: 1
+  Jsons:
+  - {fileID: 4900000, guid: 24d1a62929166e6fa849d3ba839b05c5, type: 3}
+  - {fileID: 4900000, guid: 521015be8af9f5de0beeecdc7d69806e, type: 3}
+  ExplicitKeys:
+  - eeerwe
+  - reerrthyt
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0

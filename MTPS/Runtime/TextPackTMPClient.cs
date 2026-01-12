@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace MUnity.MTPS
+namespace MTPS
 {
     public class TextPackTMPClient : MonoBehaviour
     {

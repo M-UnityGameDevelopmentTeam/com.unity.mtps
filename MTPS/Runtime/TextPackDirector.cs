@@ -4,7 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace MUnity.MTPS
+namespace MTPS
 {
     [Serializable]
     public struct TextPack

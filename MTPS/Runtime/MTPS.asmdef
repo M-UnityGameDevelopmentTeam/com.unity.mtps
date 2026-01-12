@@ -1,5 +1,5 @@
 {
-    "name": "MUnity.MTPS",
+    "name": "MTPS",
     "rootNamespace": "",
     "references": [
         "Unity.TextMeshPro"
