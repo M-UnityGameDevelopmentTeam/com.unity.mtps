@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,7 +31,7 @@ namespace MTPS
 
         private List<string> keys;
         private string jsonstring;
-        private Dictionary<string, string> jsonkeys;
+        private Dictionary<string, object> jsonkeys;
 
         private void Start()
         {
@@ -41,9 +42,15 @@ namespace MTPS
             }
             foreach (TextAsset Json in Jsons)
             {
-                jsonkeys = JsonConvert.DeserializeObject<Dictionary<string, string>>(Json.text);
-                print(jsonkeys.Keys.ToList());
-                keys.AddRange(jsonkeys.Keys.ToList());
+                jsonkeys = JsonConvert.DeserializeObject<Dictionary<string, object>>(Json.text);
+                foreach (var entry in jsonkeys)
+                {
+                    if (entry.Value is JArray list)
+                        keys.AddRange(list.ToObject<List<string>>());
+                    else
+                        keys.Add(entry.Value.ToString());
+                }
+                //keys.AddRange(jsonkeys.Keys.ToList());    TODO: Option to import object's keys
             }
             Invoke(nameof(CreateTemplate), DelayInSeconds);
         }

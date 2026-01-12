@@ -179,10 +179,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MUnity.MTPS::MUnity.MTPS.MTPSHelper
   Scenes: []
-  DelayInSeconds: 1
   Jsons:
-  - {fileID: 4900000, guid: 24d1a62929166e6fa849d3ba839b05c5, type: 3}
-  - {fileID: 4900000, guid: 521015be8af9f5de0beeecdc7d69806e, type: 3}
+  - {fileID: 4900000, guid: bd7edbba21806ca87b2e35e0cf3b83c0, type: 3}
+  DelayInSeconds: 1
   ExplicitKeys:
   - eeerwe
   - reerrthyt
