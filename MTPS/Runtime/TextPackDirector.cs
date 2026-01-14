@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -43,10 +44,12 @@ namespace MTPS
                     }
                 }
             }
-            else
-                Application.Quit();
-            if (!File.Exists(PlayerPrefs.GetString("CurrentTextPackPath", TextPacks[0].FilePath)))
-                PlayerPrefs.SetString("CurrentTextPackPath", TextPacks[0].FilePath);
+            if (!File.Exists(PlayerPrefs.GetString("CurrentTextPackPath")))
+                print(Application.systemLanguage);
+            PlayerPrefs.SetString(
+                "CurrentTextPackPath",
+                TextPacks.Find(s => s.Name.Contains(Application.systemLanguage.ToString())).FilePath
+            );
             CurrentTextPack = JsonConvert.DeserializeObject<Dictionary<string, string>>(
                 File.ReadAllText(
                     PlayerPrefs.GetString("CurrentTextPackPath", TextPacks[0].FilePath)
