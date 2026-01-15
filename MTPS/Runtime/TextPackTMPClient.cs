@@ -17,6 +17,10 @@ namespace MTPS
             UpdateText();
         }
 
-        public void UpdateText() => ClientText.text = Extracter.FCurrentTextPack[Key];
+        public void UpdateText()
+        {
+            if (Extracter.FCurrentTextPack.ContainsKey(Key))
+                ClientText.text = Extracter.FCurrentTextPack[Key];
+        }
     }
 }

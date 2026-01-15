@@ -16,6 +16,10 @@ namespace MTPS
         [SerializeField]
         private string[] Scenes;
 
+        [Tooltip("Search prefabs for TextPack Clients to import keys from them")]
+        [SerializeField]
+        private GameObject[] Prefabs;
+
         [Tooltip("Import keys from JSON files")]
         [SerializeField]
         private TextAsset[] Jsons;
@@ -39,6 +43,10 @@ namespace MTPS
             foreach (string Scene in Scenes)
             {
                 SceneManager.LoadScene(Scene, LoadSceneMode.Additive);
+            }
+            foreach (GameObject prefab in Prefabs)
+            {
+                Instantiate(prefab);
             }
             foreach (TextAsset Json in Jsons)
             {
