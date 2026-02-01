@@ -5,22 +5,21 @@ namespace MTPS
 {
     public class TextPackTMPClient : MonoBehaviour
     {
-        private TextPackDirector Extracter;
-        private TMP_Text ClientText;
+        private TextPackDirector textDirector;
+        private TMP_Text clientText;
         public string Key;
 
         private void Start()
         {
-            ClientText = GetComponent<TMP_Text>();
-            Extracter = FindFirstObjectByType<TextPackDirector>();
-            Key = ClientText.text;
+            clientText = GetComponent<TMP_Text>();
+            textDirector = FindFirstObjectByType<TextPackDirector>();
+            Key = clientText.text;
             UpdateText();
         }
 
         public void UpdateText()
         {
-            if (Extracter.FCurrentTextPack.ContainsKey(Key))
-                ClientText.text = Extracter.FCurrentTextPack[Key];
+            clientText.text = textDirector.GetKeyFromTextPack(Key);
         }
     }
 }

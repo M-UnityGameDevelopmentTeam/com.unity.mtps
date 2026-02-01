@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -23,7 +22,6 @@ namespace MTPS
         private bool DestroyOnLoad;
         public List<TextPack> TextPacks;
         public List<TextPack> FTextPacks => TextPacks;
-        public Dictionary<string, string> FCurrentTextPack => CurrentTextPack;
         private TextPack tempPack;
 
         private void Awake()
@@ -55,6 +53,13 @@ namespace MTPS
                     PlayerPrefs.GetString("CurrentTextPackPath", TextPacks[0].FilePath)
                 )
             );
+        }
+
+        public string GetKeyFromTextPack(string Key)
+        {
+            if (CurrentTextPack.ContainsKey(Key))
+                return CurrentTextPack[Key];
+            return Key;
         }
 
         public void ChangeTextPack(int Index)
