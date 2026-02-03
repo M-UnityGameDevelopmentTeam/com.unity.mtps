@@ -33,7 +33,12 @@ namespace MTPS
         [SerializeField]
         private string[] ExplicitKeys;
 
+        [Tooltip("Use key name as key value")]
+        [SerializeField]
+        private bool DuplicateKeysForValues;
+
         private List<string> keys;
+        private Dictionary<string, string> keysdict;
         private string jsonstring;
         private Dictionary<string, object> jsonkeys;
 
@@ -65,7 +70,7 @@ namespace MTPS
 
         private void CreateTemplate()
         {
-            jsonstring = "{\n";
+            keysdict = new Dictionary<string, string> { };
             foreach (
                 TextPackTMPClient text in FindObjectsByType<TextPackTMPClient>(
                     FindObjectsSortMode.None
@@ -85,11 +90,11 @@ namespace MTPS
             keys.AddRange(ExplicitKeys.ToList());
             keys = keys.Distinct().ToList();
             foreach (string key in keys)
-                jsonstring += $"    \"{key}\": \"{key}\",\n";
-            jsonstring += "}";
+                keysdict.Add(key, DuplicateKeysForValues ? key : "");
+            jsonstring = JsonConvert.SerializeObject(keysdict, Formatting.Indented);
             string filePath = Path.Combine(Application.dataPath, "Template.json");
             File.WriteAllText(filePath, jsonstring);
-            Debug.LogWarning("JSON file saved to: " + filePath);
+            Debug.LogWarning("JSON Template saved to: " + filePath);
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.ExitPlaymode();
 #endif
