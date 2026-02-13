@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace MTPS
@@ -28,31 +30,49 @@ namespace MTPS
         {
             if (gameObject.scene.buildIndex != -1 && !DestroyOnLoad)
                 DontDestroyOnLoad(gameObject);
-            string targetFolderPath = Application.dataPath + "/TextPacks";
-            if (Directory.Exists(targetFolderPath))
+            TextPacks = LoadTextPacksFromFolder(Application.dataPath + "/TextPacks");
+            if (TextPacks.Count == 0)
             {
-                string[] files = Directory.GetFiles(targetFolderPath);
-                foreach (string filePath in files)
-                {
-                    if (Path.GetExtension(filePath) == ".json")
-                    {
-                        tempPack.Name = Path.GetFileNameWithoutExtension(filePath);
-                        tempPack.FilePath = filePath;
-                        TextPacks.Add(tempPack);
-                    }
-                }
+                CurrentTextPack = new Dictionary<string, string>();
+                return;
             }
-            if (!File.Exists(PlayerPrefs.GetString("CurrentTextPackPath")))
-                print(Application.systemLanguage);
-            PlayerPrefs.SetString(
-                "CurrentTextPackPath",
-                TextPacks.Find(s => s.Name.Contains(Application.systemLanguage.ToString())).FilePath
+            tempPack = TextPacks.Find(s =>
+                s.FilePath == (PlayerPrefs.GetString("CurrentTextPackPath", TextPacks[0].FilePath))
             );
+            if (tempPack.Name == null)
+            {
+                tempPack = TextPacks.Find(s =>
+                    s.Name.Contains(Application.systemLanguage.ToString())
+                );
+                if (tempPack.Name == null)
+                    tempPack = TextPacks[0];
+                PlayerPrefs.SetString("CurrentTextPackPath", tempPack.FilePath);
+            }
             CurrentTextPack = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-                File.ReadAllText(
-                    PlayerPrefs.GetString("CurrentTextPackPath", TextPacks[0].FilePath)
-                )
+                File.ReadAllText(tempPack.FilePath)
             );
+        }
+
+        public List<TextPack> LoadTextPacksFromFolder(string FolderPath)
+        {
+            TextPacks = new List<TextPack>();
+            if (!Directory.Exists(FolderPath))
+                return TextPacks;
+            string[] files = Directory.GetFiles(FolderPath);
+            foreach (string filePath in files)
+            {
+                try
+                {
+                    JToken.Parse(File.ReadAllText(filePath));
+                    tempPack.Name = Path.GetFileNameWithoutExtension(filePath);
+                    tempPack.FilePath = filePath;
+                    TextPacks.Add(tempPack);
+                }
+                catch { }
+            }
+            tempPack.Name = null;
+            tempPack.FilePath = null;
+            return TextPacks;
         }
 
         public string GetKeyFromTextPack(string Key)
@@ -72,12 +92,12 @@ namespace MTPS
                 PlayerPrefs.SetString("CurrentTextPackPath", TextPacks[Index].FilePath);
             }
             foreach (
-                TextPackTMPClient text in FindObjectsByType<TextPackTMPClient>(
-                    FindObjectsSortMode.None
-                )
+                ITextPackClient client in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
+                    .OfType<ITextPackClient>()
+                    .ToArray()
             )
             {
-                text.UpdateText();
+                client.TextPackUpdate();
             }
         }
     }

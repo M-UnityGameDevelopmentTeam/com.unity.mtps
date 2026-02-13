@@ -72,18 +72,11 @@ namespace MTPS
         {
             keysdict = new Dictionary<string, string> { };
             foreach (
-                TextPackTMPClient text in FindObjectsByType<TextPackTMPClient>(
-                    FindObjectsSortMode.None
-                )
-            )
-                if (!keys.Contains(text.Key))
-                    keys.Add(text.Key);
-            foreach (
-                ITextPackCustomClient text in FindObjectsByType<MonoBehaviour>(
+                ITextPackClient text in FindObjectsByType<MonoBehaviour>(
                         FindObjectsInactive.Exclude,
                         FindObjectsSortMode.None
                     )
-                    .OfType<ITextPackCustomClient>()
+                    .OfType<ITextPackClient>()
                     .ToArray()
             )
                 keys.AddRange(text.GetKeys());

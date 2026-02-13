@@ -3,21 +3,22 @@ using UnityEngine;
 
 namespace MTPS
 {
-    public class TextPackTMPClient : MonoBehaviour
+    public class TextPackTMPClient : MonoBehaviour, ITextPackClient
     {
         private TextPackDirector textDirector;
         private TMP_Text clientText;
-        public string Key;
+        private string Key;
 
-        private void Start()
+        public string[] GetKeys() => new string[] { Key };
+
+        private void Awake()
         {
             clientText = GetComponent<TMP_Text>();
-            textDirector = FindFirstObjectByType<TextPackDirector>();
             Key = clientText.text;
-            UpdateText();
+            textDirector = FindFirstObjectByType<TextPackDirector>();
         }
 
-        public void UpdateText()
+        public void TextPackUpdate()
         {
             clientText.text = textDirector.GetKeyFromTextPack(Key);
         }
