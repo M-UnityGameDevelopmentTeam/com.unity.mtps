@@ -18,6 +18,7 @@ namespace MTPS
 
         private void Awake()
         {
+            GetKeys();
             textDirector = FindFirstObjectByType<TextPackDirector>();
             TextPackUpdate();
         }
