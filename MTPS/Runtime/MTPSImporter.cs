@@ -73,7 +73,7 @@ namespace MTPS
             keysdict = new Dictionary<string, string> { };
             foreach (
                 ITextPackClient text in FindObjectsByType<MonoBehaviour>(
-                        FindObjectsInactive.Exclude,
+                        FindObjectsInactive.Include,
                         FindObjectsSortMode.None
                     )
                     .OfType<ITextPackClient>()

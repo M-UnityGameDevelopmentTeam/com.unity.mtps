@@ -9,18 +9,19 @@ namespace MTPS
         private TMP_Text clientText;
         private string Key;
 
-        public string[] GetKeys() => new string[] { Key };
-
-        private void Awake()
+        public string[] GetKeys()
         {
             clientText = GetComponent<TMP_Text>();
             Key = clientText.text;
-            textDirector = FindFirstObjectByType<TextPackDirector>();
+            return new string[] { Key };
         }
 
-        public void TextPackUpdate()
+        private void Awake()
         {
-            clientText.text = textDirector.GetKeyFromTextPack(Key);
+            textDirector = FindFirstObjectByType<TextPackDirector>();
+            TextPackUpdate();
         }
+
+        public void TextPackUpdate() => clientText.text = textDirector.GetKeyFromTextPack(Key);
     }
 }
