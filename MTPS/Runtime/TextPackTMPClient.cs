@@ -16,7 +16,7 @@ namespace MTPS
             return new string[] { Key };
         }
 
-        private void Awake()
+        private void Start()
         {
             GetKeys();
             textDirector = FindFirstObjectByType<TextPackDirector>();
